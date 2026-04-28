@@ -1,0 +1,23 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# 本地构建/部署产物
+*.zip
+*.tar
+*.tar.gz
+
+# IDE / 编辑器
+.idea/
+.vscode/
+*.swp
+
+# 临时文件
+*.bak
+*.tmp
+

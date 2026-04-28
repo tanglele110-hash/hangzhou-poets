@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Noto Serif SC", serif;
+  --color-paper: #f4f1e8;
+  --color-ink: #2c2c2c;
+  --color-red: #b83b3b;
+  --color-blue: #4a6b8c;
+  --color-green: #5c7a6b;
+  --color-gold: #c4a77d;
+}
+
+body {
+  font-family: var(--font-serif);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  margin: 0;
+  padding: 0;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.pattern-cloud {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.bg-texture {
+  background-color: var(--color-paper);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* 诗人详情卡片：≥640px 用古籍竖排，移动端用横排 */
+@media (min-width: 640px) {
+  .poet-detail-card {
+    writing-mode: vertical-rl;
+  }
+  .poet-detail-card .poet-detail-meta {
+    text-orientation: upright;
+  }
+}
