@@ -6,11 +6,15 @@
 > their lives, schools, careers, signature works, and the relationships between them,
 > all rendered as one interactive timeline.*
 
-🌐 **在线访问 · Live Demo**：稳定公开域名配置中 *(Public stable URL is being configured.)*
+🌐 **在线访问 · Live Demo**：<https://tanglele110-hash.github.io/hangzhou-poets/>
 
-> 💾 **目前预览方式 · How to preview now**：从 [Releases](https://github.com/tanglele110-hash/hangzhou-poets/releases) 下载 `hangzhou-poets-vX.Y.Z-dist.zip`，解压后用任意静态服务器（推荐 `npx serve dist/`）即可在本地预览，无需后端。
+> 🌍 上面是 GitHub Pages 永久稳定地址，国际访问最稳；中国大陆访问受 GFW 影响可能略慢，多刷一次通常也能打开。
+> *(Hosted on GitHub Pages — permanent and globally accessible. Mainland China users may experience slower load times due to GFW; usually a refresh helps.)*
 >
-> *Download the latest dist bundle from [Releases](https://github.com/tanglele110-hash/hangzhou-poets/releases) and serve it with any static HTTP server (e.g. `npx serve dist/`). No backend required.*
+> 🇨🇳 **国内加速版 · Mainland China mirror**：腾讯云 EdgeOne Pages 已经搭好（[`hangzhou-poets-jvrvjzcs.edgeone.cool`](https://hangzhou-poets-jvrvjzcs.edgeone.cool)），但腾讯云规定必须绑定 ICP 备案过的自定义域名才能公开访问，备案完成后会切换为国内主入口。
+> *(Tencent Cloud EdgeOne Pages mirror is provisioned but pending ICP-filed custom domain — Tencent Cloud requires this for public access in mainland China.)*
+>
+> 💾 **离线预览 · Offline preview**：从 [Releases](https://github.com/tanglele110-hash/hangzhou-poets/releases) 下载 `hangzhou-poets-vX.Y.Z-dist.zip`，解压后用 `npx serve dist/` 即可，无需后端。
 
 <table>
 <tr>
