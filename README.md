@@ -6,10 +6,11 @@
 > their lives, schools, careers, signature works, and the relationships between them,
 > all rendered as one interactive timeline.*
 
-🌐 **在线访问 · Live Demo**：<https://hangzhou-poets-ndlcm6zvaa.edgeone.cool>
+🌐 **在线访问 · Live Demo**：稳定公开域名配置中 *(Public stable URL is being configured.)*
 
-> 当前是腾讯云 EdgeOne Pages 的临时预览域名，正式域名待备案后绑定。
-> *(Temporary preview URL on Tencent EdgeOne Pages; a custom domain will be attached after ICP filing.)*
+> 💾 **目前预览方式 · How to preview now**：从 [Releases](https://github.com/tanglele110-hash/hangzhou-poets/releases) 下载 `hangzhou-poets-vX.Y.Z-dist.zip`，解压后用任意静态服务器（推荐 `npx serve dist/`）即可在本地预览，无需后端。
+>
+> *Download the latest dist bundle from [Releases](https://github.com/tanglele110-hash/hangzhou-poets/releases) and serve it with any static HTTP server (e.g. `npx serve dist/`). No backend required.*
 
 <table>
 <tr>
