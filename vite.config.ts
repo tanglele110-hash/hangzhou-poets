@@ -4,6 +4,10 @@ import path from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
+  // base 用于资源引用前缀。
+  // - 默认 `/`：本地 dev、EdgeOne Pages（绑域名后挂根路径）、Releases dist.zip
+  // - GitHub Pages 部署到 https://<user>.github.io/<repo>/ 时，CI 注入 VITE_BASE_PATH=/<repo>/
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
