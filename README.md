@@ -1,53 +1,77 @@
-# 杭州唐宋诗词名家图鉴
+# 杭州唐宋诗词名家图鉴 · Hangzhou Tang–Song Poets
 
 > 钱塘自古繁华，文人墨客荟萃。
+>
+> *Eighty-plus poets of the Tang and Song dynasties associated with Hangzhou —
+> their lives, schools, careers, signature works, and the relationships between them,
+> all rendered as one interactive timeline.*
 
-一个交互式的可视化应用，按时代纵向铺开 80+ 位与杭州相关的唐宋诗词名家，包含他们的生卒、流派、官职、代表作以及人物之间的关系网络。
+🌐 **在线访问 · Live Demo**：<https://hangzhou-poets-ndlcm6zvaa.edgeone.cool>
 
-🌐 **在线访问**：https://hangzhou-poets-ndlcm6zvaa.edgeone.cool
+> 当前是腾讯云 EdgeOne Pages 的临时预览域名，正式域名待备案后绑定。
+> *(Temporary preview URL on Tencent EdgeOne Pages; a custom domain will be attached after ICP filing.)*
 
-> 上面是腾讯云 EdgeOne Pages 的临时预览域名，正式域名待备案后绑定。
+<table>
+<tr>
+<td width="40%" align="center">
+  <img src="docs/screenshots/mobile-overview.png" alt="移动端「全貌」视图：诗人按时代纵向铺开，颜色三档区分核心 / 重要 / 知名" />
+</td>
+<td width="60%" valign="top">
 
-<p align="center">
-  <img src="docs/screenshots/mobile-overview.png" alt="杭州唐宋诗词名家图鉴 - 全貌视图" width="360" />
-</p>
+### 一图概览 · At a Glance
 
-<p align="center">
-  <sub>↑ 移动端「全貌」视图：80+ 位诗人按时代纵向铺开；红 = 核心代表，蓝 = 重要名家，绿 = 知名文人。桌面端有更宽阔的卡片布局与详细筛选侧栏。</sub>
-</p>
+- **80+ 位**唐宋诗人，按时代纵向铺开
+- 颜色三档：🔴 核心代表 · 🔵 重要名家 · 🟢 知名文人
+- 30+ 个标签的多维筛选（文人类型 / 行迹 / 流派 / 科举 / 官职）
+- 关系网络图谱：单人关系图 + 全景力导向图
+- 一键导出整张时间轴为长图
+- 移动端紧凑顶栏 + 全屏筛选抽屉，桌面端宽屏布局
+- Hash 路由 `#/poet/<姓名>`、`#/graph` 直接分享
 
-## 功能
+> *80+ poets · timeline + relationship graph · 30+ multi-select tags ·
+> one-click PNG export · responsive (mobile drawer / desktop wide layout) ·
+> shareable URLs via hash routing.*
 
-- **时间轴主视图**：以年份为纵轴铺开所有诗人卡片，颜色区分核心/重要/知名三档；按"五代"等时期分块
-- **人物详情**：点击卡片进入详情弹窗，含生平、流派、官职、代表作；移动端横排显示，桌面端竖排显示
-- **关系网络**：单人关系图（围绕中心人物）+ 全景关系图（按时期分簇的力导向图）
-- **多维筛选**：5 大类 30+ 个标签（文人类型 / 行迹 / 流派 / 科举 / 官职），支持多选 AND 过滤
-- **导出长图**：一键导出整张时间轴为 PNG
-- **Hash 路由**：`#/poet/<姓名>`、`#/graph`、`#/graph/<姓名>` 都能直接分享
-- **响应式**：移动端紧凑顶栏 + 全屏筛选抽屉、自动 fit zoom、双指缩放；桌面端宽屏布局
-- **数据自检**：构建前跑数据完整性校验（关系两端必须存在、生卒年逻辑、必填字段等）
+</td>
+</tr>
+</table>
 
-## 技术栈
+## 功能 · Features
 
-| 层 | 选型 |
+- **时间轴主视图** — 以年份为纵轴铺开所有诗人卡片，按"五代"等时期分块；颜色区分核心 / 重要 / 知名三档。
+- **人物详情** — 点击卡片进入详情弹窗，含生平、流派、官职、代表作；移动端横排显示，桌面端竖排古风排版。
+- **关系网络** — 单人关系图（围绕中心人物）+ 全景关系图（按时期分簇的力导向图）。
+- **多维筛选** — 5 大类 30+ 个标签，支持多选 AND 过滤。
+- **导出长图** — 一键导出整张时间轴为 PNG。
+- **Hash 路由** — `#/poet/<姓名>`、`#/graph`、`#/graph/<姓名>` 都能直接分享。
+- **响应式** — 移动端紧凑顶栏 + 全屏筛选抽屉、自动 fit zoom、双指缩放；桌面端宽屏布局。
+- **数据自检** — 构建前跑数据完整性校验（关系两端必须存在、生卒年逻辑、必填字段等）。
+
+> *Timeline view · poet detail modal (vertical Chinese typography on desktop) ·
+> per-poet & global relationship graphs · multi-tag AND filter · PNG export ·
+> shareable hash URLs · responsive layout · data integrity checks at build time.*
+
+## 技术栈 · Tech Stack
+
+| 层 / Layer | 选型 / Choice |
 |---|---|
-| 框架 | React 19 + TypeScript |
-| 构建 | Vite 6 |
-| 样式 | Tailwind CSS 4 |
-| 可视化 | D3.js（按子包：`d3-selection` / `d3-force` / `d3-zoom` / `d3-drag`） |
-| 图标 | lucide-react |
-| 部署 | 静态产物，托管在腾讯云 EdgeOne Pages |
+| 框架 / Framework | React 19 + TypeScript |
+| 构建 / Build | Vite 6 |
+| 样式 / Styling | Tailwind CSS 4 |
+| 可视化 / Viz | D3.js（按子包：`d3-selection` / `d3-force` / `d3-zoom` / `d3-drag`） |
+| 图标 / Icons | lucide-react |
+| 部署 / Hosting | 静态产物，托管在腾讯云 EdgeOne Pages（CN-friendly static hosting） |
 
-## 本地运行
+## 本地运行 · Getting Started
 
-**前置条件**：Node.js ≥ 18
+**前置条件 (Prerequisites)**：Node.js ≥ 18
 
 ```bash
 npm install
 npm run dev          # http://localhost:3000
 ```
 
-## 构建与部署
+## 构建与部署 · Build & Deploy
 
 ```bash
 npm run validate:data    # 数据完整性校验（也会在 prebuild 阶段自动跑）
@@ -56,6 +80,10 @@ npm run preview          # 本地预览 dist/
 ```
 
 构建产物在 `dist/`，是纯静态文件（HTML + CSS + 分包 JS），可直接传到任意静态托管：EdgeOne Pages / Cloudflare Pages / Vercel / Netlify / 腾讯云 COS / GitHub Pages 都行。
+
+> *`dist/` is a fully static bundle (HTML + CSS + chunked JS). Drop it onto any
+> static host — EdgeOne Pages, Cloudflare Pages, Vercel, Netlify, Tencent COS,
+> GitHub Pages — no backend required.*
 
 ### 部署到 EdgeOne Pages（手动 zip 模式）
 
@@ -81,7 +109,7 @@ try {
 
 把生成的 `hangzhou-poets-dist.zip` 上传到 EdgeOne Pages 项目的「新建部署」即可。
 
-## 项目结构
+## 项目结构 · Project Structure
 
 ```
 src/
@@ -106,14 +134,18 @@ src/
 └── utils/                   # 布局计算、长图导出
 ```
 
-## 数据来源
+## 数据来源 · Data Sources
 
-诗人生卒年、官职、流派、代表作主要参考《全唐诗》《全宋词》以及通行的人物年谱、地方志资料，关系网络以可考的师承、唱和、姻亲、同朝为依据，部分推断关系会标注存疑。
+诗人生卒年、官职、流派、代表作主要参考《全唐诗》《全宋词》以及通行的人物年谱、地方志资料；关系网络以可考的师承、唱和、姻亲、同朝为依据，部分推断关系会标注存疑。
+
+> *Biographical data is sourced from Quan Tang Shi (《全唐诗》),
+> Quan Song Ci (《全宋词》), standard chronological biographies, and Hangzhou
+> local gazetteers. Relationships are based on documented mentorships, poetic
+> exchanges, kinship, and contemporaneous service; speculative links are flagged.*
 
 如发现数据错误欢迎提 Issue / PR。
+*Data corrections via Issue or PR are very welcome.*
 
 ## License
 
-[Apache License 2.0](./LICENSE)
-
-Copyright 2026 Lele Tang
+[Apache License 2.0](./LICENSE) — Copyright 2026 Lele Tang
