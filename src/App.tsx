@@ -385,7 +385,11 @@ export default function App() {
       </div>
 
       {selectedPoet && (
-        <PoetDetailModal poet={selectedPoet} onClose={goHome} />
+        <PoetDetailModal
+          poet={selectedPoet}
+          onClose={goHome}
+          onShowGraph={(p) => navigate({ kind: 'graphFor', name: p.name })}
+        />
       )}
 
       <Suspense fallback={null}>

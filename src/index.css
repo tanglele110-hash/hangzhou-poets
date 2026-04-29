@@ -2,8 +2,13 @@
 
 @theme {
   --font-serif: "Noto Serif SC", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --color-paper: #f4f1e8;
+  --color-paper-2: #faf9f5;
+  --color-border-paper: #d4c4b7;
   --color-ink: #2c2c2c;
+  --color-ink-mid: #6b6458;
+  --color-ink-light: #a89e89;
   --color-red: #b83b3b;
   --color-blue: #4a6b8c;
   --color-green: #5c7a6b;
@@ -16,6 +21,10 @@ body {
   color: var(--color-ink);
   margin: 0;
   padding: 0;
+}
+
+.font-mono-design {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
 }
 
 .vertical-text {
@@ -36,16 +45,170 @@ body {
 }
 
 .bg-texture {
-  background-color: var(--color-paper);
+  background-color: #f4f1e8;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
-/* 诗人详情卡片：≥640px 用古籍竖排，移动端用横排 */
-@media (min-width: 640px) {
-  .poet-detail-card {
-    writing-mode: vertical-rl;
-  }
-  .poet-detail-card .poet-detail-meta {
-    text-orientation: upright;
-  }
+/* —— 同款"纸面"，含纸纹 + vignette 一体 —— */
+.bg-texture-vignette {
+  background-color: #faf9f5;
+  background-image:
+    radial-gradient(ellipse at center, transparent 55%, rgba(60, 50, 30, 0.16) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='nf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nf)' opacity='0.06'/%3E%3C/svg%3E");
+  background-blend-mode: normal, multiply;
+}
+
+/* —— 朱印（marketing 同款）—— */
+.seal-stamp {
+  background: var(--color-red);
+  color: var(--color-paper);
+  font-family: "Noto Serif SC", serif;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0 0 3px var(--color-red),
+    inset 0 0 0 4px var(--color-paper),
+    inset 0 0 0 6px var(--color-red);
+  letter-spacing: 0;
+  font-feature-settings: "palt";
+}
+
+/* —— 节标识 pill —— */
+.label-pill-tang  { background: rgba(184, 59, 59, 0.10); color: var(--color-red);  border: 1px solid rgba(184, 59, 59, 0.35); }
+.label-pill-nsong { background: rgba(74, 107, 140, 0.10); color: var(--color-blue); border: 1px solid rgba(74, 107, 140, 0.35); }
+.label-pill-ssong { background: rgba(92, 122, 107, 0.10); color: var(--color-green); border: 1px solid rgba(92, 122, 107, 0.35); }
+.label-pill-ink   { background: rgba(44, 44, 44, 0.06);   color: var(--color-ink-mid); border: 1px solid var(--color-border-paper); }
+
+.label-pill-base {
+  display: inline-block;
+  padding: 5px 16px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  border-radius: 2px;
+}
+
+/* —— accent 朱色竖排字 —— */
+.poet-accent-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-red);
+  line-height: 1.05;
+}
+
+/* —— 引语（borderleft 朱条） —— */
+.poet-quote-text {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 500;
+  color: var(--color-ink);
+  letter-spacing: 0.15em;
+  border-left: 3px solid var(--color-red);
+  padding-left: 18px;
+  line-height: 1.55;
+  margin: 0;
+}
+.poet-quote-src {
+  font-family: "Noto Serif SC", serif;
+  color: var(--color-ink-mid);
+  letter-spacing: 0.2em;
+}
+
+/* —— 大字名 + 拼音 —— */
+.poet-bigname {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 900;
+  color: var(--color-ink);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+.poet-pinyin {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  color: var(--color-ink-mid);
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  font-weight: 500;
+}
+
+/* —— 顶栏 / 底栏 wordmark —— */
+.modal-wordmark {
+  font-family: "Noto Serif SC", serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a3530;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+}
+.modal-index-tag {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--color-ink-light);
+  letter-spacing: 0.3em;
+}
+
+/* —— 标签 (类似 PoetCard 上的 tag) —— */
+.poet-tag-chip {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--color-ink-mid);
+  border: 1.5px solid var(--color-border-paper);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+
+/* —— CTA 按钮（朱色） —— */
+.cta-tang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.25em;
+  text-indent: 0.25em;
+  border: 1px solid rgba(184, 59, 59, 0.35);
+  background: rgba(184, 59, 59, 0.08);
+  padding: 8px 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.cta-tang:hover {
+  background: rgba(184, 59, 59, 0.16);
+  border-color: rgba(184, 59, 59, 0.6);
+}
+.cta-ink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Noto Serif SC", serif;
+  font-weight: 600;
+  color: var(--color-ink-mid);
+  letter-spacing: 0.25em;
+  text-indent: 0.25em;
+  border: 1px solid var(--color-border-paper);
+  background: rgba(255, 255, 255, 0.55);
+  padding: 8px 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.cta-ink:hover {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-ink);
+}
+
+/* —— 全文段落（保留旧的诗人详情卡 - 但用作内嵌段落） —— */
+.poet-detail-card {
+  /* legacy class，保留以兼容旧调用，不再用古籍竖排 */
 }

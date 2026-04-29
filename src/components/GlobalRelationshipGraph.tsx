@@ -501,26 +501,134 @@ export const GlobalRelationshipGraph: React.FC<GlobalRelationshipGraphProps> = (
     };
   }, [allPoets, onNodeClick]);
 
+  // 统计数据（用于底栏）
+  const linksInScope = KNOWN_RELATIONSHIPS.filter(
+    (rel) =>
+      allPoets.some((p) => p.name === rel.source) &&
+      allPoets.some((p) => p.name === rel.target),
+  );
+  const uniqueLabels = new Set(linksInScope.map((r) => r.label));
+  const eraSet = new Set(
+    allPoets.map((p) =>
+      p.era === '宋' ? (p.birth_year < 1127 ? '北宋' : '南宋') : p.era,
+    ),
+  );
+
   return (
-    <div className="fixed inset-0 z-[200] bg-[#f4f1e8]/95 backdrop-blur-sm flex items-center justify-center p-8">
-      <div className="bg-white w-full h-full rounded-xl shadow-2xl overflow-hidden relative border border-[#d4c4b7] flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-center p-6 border-b border-[#d4c4b7] bg-[#faf9f5]">
-          <div>
-            <h2 className="text-2xl font-black tracking-[0.2em] text-[#b83b3b]">全景人物关系图谱</h2>
-            <p className="text-sm text-gray-500 mt-1 tracking-widest">同时期人物归类，点击节点查看详情，支持拖拽缩放</p>
+    <div className="fixed inset-0 z-[200] bg-[#1a1714]/55 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+      <div
+        className="relative bg-texture-vignette border border-[#d4c4b7] shadow-[0_30px_80px_-20px_rgba(20,15,5,0.55)]
+                   w-full h-full max-w-[1600px] max-h-[96vh] rounded-sm overflow-hidden flex flex-col"
+        role="dialog"
+        aria-modal="true"
+      >
+        {/* 顶栏 */}
+        <div className="shrink-0 flex justify-between items-center px-6 sm:px-12 pt-5 sm:pt-7 pb-2.5 sm:pb-3">
+          <div className="modal-wordmark text-[12px] sm:text-[14px]">
+            杭州 · 唐宋诗词名家图鉴
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-black/5 rounded-full transition-colors text-gray-500 hover:text-gray-800"
+          <div className="flex items-center gap-3 sm:gap-5">
+            <span className="modal-index-tag hidden sm:inline">
+              RELATIONSHIP · GRAPH
+            </span>
+            <button
+              onClick={onClose}
+              className="text-[#a89e89] hover:text-[#b83b3b] transition-colors"
+              aria-label="关闭"
+            >
+              <X size={22} />
+            </button>
+          </div>
+        </div>
+        <div className="shrink-0 mx-6 sm:mx-12 h-px bg-[#d4c4b7]" />
+
+        {/* 标题 + 副标题区 */}
+        <div className="shrink-0 px-6 sm:px-12 pt-4 sm:pt-5 pb-2 sm:pb-3 relative">
+          <div className="flex items-end gap-3 sm:gap-5">
+            <span className="label-pill-base label-pill-tang">
+              全景关系
+            </span>
+            <h2 className="text-[20px] sm:text-[28px] font-black tracking-[0.16em] text-[#2c2c2c] m-0 leading-none">
+              杭城七百年 · 名家关系图谱
+            </h2>
+          </div>
+          <p className="text-[11px] sm:text-[13px] text-[#6b6458] tracking-[0.2em] mt-2 sm:mt-3">
+            按朝代分簇 · 节点大小代表关系数 · 拖动 / 滚轮缩放 · 单击查看详情
+          </p>
+
+          {/* 朱印 */}
+          <div
+            className="seal-stamp absolute top-3 sm:top-4 right-6 sm:right-12 w-[44px] h-[44px] sm:w-[56px] sm:h-[56px] text-[24px] sm:text-[30px] rounded-[2px] z-[2]"
+            aria-hidden
           >
-            <X size={24} />
-          </button>
+            图
+          </div>
         </div>
 
         {/* Graph Container */}
-        <div ref={containerRef} className="flex-1 w-full relative overflow-hidden bg-[#faf9f5]">
+        <div
+          ref={containerRef}
+          className="flex-1 w-full relative overflow-hidden"
+        >
           <svg ref={svgRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
+        </div>
+
+        {/* 底栏 */}
+        <div className="shrink-0 mx-6 sm:mx-12 h-px bg-[#d4c4b7]" />
+        <div className="shrink-0 px-6 sm:px-12 pt-3 sm:pt-4 pb-4 sm:pb-5 flex flex-wrap gap-4 justify-between items-center">
+          {/* 左：能力标识 */}
+          <div className="flex flex-col">
+            <span className="text-[14px] sm:text-[16px] font-bold text-[#2c2c2c] tracking-[0.4em] leading-none">
+              能力 · 全景关系
+            </span>
+            <span className="font-mono-design text-[9px] sm:text-[10px] text-[#a89e89] tracking-[0.3em] mt-1">
+              GLOBAL RELATIONSHIP
+            </span>
+          </div>
+
+          {/* 中：四组数据 */}
+          <div className="flex items-center gap-4 sm:gap-7">
+            <div className="flex flex-col items-center">
+              <span className="font-mono-design text-[20px] sm:text-[26px] font-black text-[#b83b3b] leading-none">
+                {linksInScope.length}
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-[#6b6458] tracking-[0.3em] mt-1">
+                条关系
+              </span>
+            </div>
+            <div className="w-px h-8 bg-[#d4c4b7]" />
+            <div className="flex flex-col items-center">
+              <span className="font-mono-design text-[20px] sm:text-[26px] font-black text-[#4a6b8c] leading-none">
+                {uniqueLabels.size}
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-[#6b6458] tracking-[0.3em] mt-1">
+                类关系
+              </span>
+            </div>
+            <div className="w-px h-8 bg-[#d4c4b7]" />
+            <div className="flex flex-col items-center">
+              <span className="font-mono-design text-[20px] sm:text-[26px] font-black text-[#5c7a6b] leading-none">
+                {eraSet.size}
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-[#6b6458] tracking-[0.3em] mt-1">
+                朝代簇
+              </span>
+            </div>
+            <div className="w-px h-8 bg-[#d4c4b7]" />
+            <div className="flex flex-col items-center">
+              <span className="font-mono-design text-[20px] sm:text-[26px] font-black text-[#2c2c2c] leading-none">
+                {allPoets.length}
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-[#6b6458] tracking-[0.3em] mt-1">
+                位诗人
+              </span>
+            </div>
+          </div>
+
+          {/* 右：CTA */}
+          <button onClick={onClose} className="cta-ink text-[12px] sm:text-[13px]">
+            返回时间轴
+          </button>
         </div>
       </div>
     </div>
