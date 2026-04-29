@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>P3 · 产品定位卡 · 杭州唐宋诗词名家图鉴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=ZCOOL+XiaoWei&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* 复用 claude design 视觉系统 */
+  :root {
+    --paper: #f4f1e8;
+    --paper-2: #faf9f5;
+    --border: #d4c4b7;
+    --ink: #2c2c2c;
+    --ink-mid: #6b6458;
+    --ink-light: #a89e89;
+    --tang: #b83b3b;
+    --nsong: #4a6b8c;
+    --ssong: #5c7a6b;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: #1a1a1a; /* 暗底凸显画布 */
+    font-family: "Noto Serif SC", serif;
+  }
+  .canvas {
+    width: 1080px;
+    height: 1440px;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0 auto;
+    color: var(--ink);
+  }
+  /* ============ 视觉原语 · 复用 scenes.jsx ============ */
+  .paper-texture {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    z-index: 50;
+  }
+  .vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(60,50,30,0.18) 100%);
+    z-index: 51;
+  }
+  /* 朱砂印章 */
+  .seal {
+    background: var(--tang);
+    color: var(--paper);
+    font-family: "Noto Serif SC", serif;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow:
+      inset 0 0 0 3px var(--tang),
+      inset 0 0 0 4px var(--paper),
+      inset 0 0 0 6px var(--tang);
+    letter-spacing: 0;
+    font-feature-settings: "palt";
+  }
+
+  /* ============ 顶栏 ============ */
+  .topbar {
+    position: absolute; top: 56px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 10;
+  }
+  .wordmark {
+    font-family: "Noto Serif SC", serif;
+    font-size: 18px; font-weight: 600;
+    color: #3a3530;
+    letter-spacing: 0.4em; text-indent: 0.4em;
+  }
+  .index-tag {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px; color: var(--ink-light);
+    letter-spacing: 0.3em;
+  }
+  .topbar-divider {
+    position: absolute; top: 110px; left: 64px; right: 64px;
+    height: 1px; background: var(--border);
+    z-index: 10;
+  }
+
+  /* ============ 主标题区 ============ */
+  .title-region {
+    position: absolute; top: 200px; left: 0; right: 0;
+    text-align: center;
+    z-index: 10;
+  }
+  .label-pill {
+    display: inline-block;
+    padding: 6px 18px;
+    background: rgba(184,59,59,0.10);
+    color: var(--tang);
+    border: 1px solid rgba(184,59,59,0.35);
+    font-family: "Noto Serif SC", serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.4em; text-indent: 0.4em;
+    margin-bottom: 36px;
+  }
+  .product-name-cn {
+    font-family: "Noto Serif SC", serif;
+    font-size: 88px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.08em; text-indent: 0.08em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .product-name-en {
+    margin-top: 26px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 18px;
+    color: var(--ink-mid);
+    letter-spacing: 0.45em; text-indent: 0.45em;
+    font-weight: 400;
+  }
+
+  /* ============ Tagline 一句话 ============ */
+  .tagline {
+    position: absolute; top: 480px; left: 0; right: 0;
+    text-align: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.16em; text-indent: 0.16em;
+    line-height: 1.7;
+    z-index: 10;
+    padding: 0 96px;
+    box-sizing: border-box;
+  }
+  .tagline strong {
+    color: var(--tang);
+    font-weight: 600;
+  }
+
+  /* ============ 数据 hero ============ */
+  .stats-region {
+    position: absolute; top: 760px; left: 64px; right: 64px;
+    z-index: 10;
+  }
+  .stats-label {
+    text-align: center;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 0.5em;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .stats-label::before, .stats-label::after {
+    content: '';
+    position: absolute; top: 50%;
+    width: 80px; height: 1px;
+    background: var(--border);
+  }
+  .stats-label::before { left: 50%; margin-left: -188px; }
+  .stats-label::after  { left: 50%; margin-left: 108px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .stat-card {
+    background: var(--paper-2);
+    border: 1.5px solid var(--border);
+    padding: 28px 28px 22px;
+    position: relative;
+    box-shadow: 0 16px 36px -22px rgba(60,50,30,0.18);
+    z-index: 11;
+  }
+  .stat-card.tang   { border-left: 4px solid var(--tang);  }
+  .stat-card.nsong  { border-left: 4px solid var(--nsong); }
+  .stat-card.ssong  { border-left: 4px solid var(--ssong); }
+  .stat-card.ink    { border-left: 4px solid var(--ink); }
+
+  .stat-num {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 84px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .stat-card.tang  .stat-num { color: var(--tang); }
+  .stat-card.nsong .stat-num { color: var(--nsong); }
+  .stat-card.ssong .stat-num { color: var(--ssong); }
+
+  .stat-label-cn {
+    margin-top: 10px;
+    font-family: "Noto Serif SC", serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.3em; text-indent: 0.3em;
+  }
+  .stat-label-en {
+    margin-top: 4px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .stat-corner {
+    position: absolute; right: 22px; top: 22px;
+    font-family: "Noto Serif SC", serif;
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 0.3em;
+  }
+
+  /* ============ 底栏 ============ */
+  .bottom-divider {
+    position: absolute; bottom: 130px; left: 64px; right: 64px;
+    height: 1px; background: var(--border);
+    z-index: 10;
+  }
+  .bottom-row {
+    position: absolute; bottom: 48px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 12;
+  }
+  .bottom-meta-left {
+    font-family: "Noto Serif SC", serif;
+  }
+  .bottom-cn {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.4em; text-indent: 0.4em;
+    margin-bottom: 8px;
+  }
+  .bottom-en {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.3em;
+  }
+  .bottom-seal-wrap {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  }
+  .bottom-seal-label {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: 0.3em;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- 顶栏 -->
+  <div class="topbar">
+    <div class="wordmark">杭州 · 唐宋诗词名家图鉴</div>
+    <div class="index-tag">03 / 11 · HANGZHOU POETS</div>
+  </div>
+  <div class="topbar-divider"></div>
+
+  <!-- 主标题区 -->
+  <div class="title-region">
+    <div class="label-pill">产品 · PRODUCT</div>
+    <h1 class="product-name-cn">杭州唐宋诗词名家图鉴</h1>
+    <div class="product-name-en">HANGZHOU TANG-SONG POETS · INTERACTIVE TIMELINE</div>
+  </div>
+
+  <!-- 一句话 tagline -->
+  <div class="tagline">
+    一张可交互的网页时间轴，<br/>
+    把 <strong>81 位</strong>与杭州相关的唐宋诗人，<br/>
+    按生卒年一口气铺开。
+  </div>
+
+  <!-- 数据 hero -->
+  <div class="stats-region">
+    <div class="stats-label">KEY · NUMBERS</div>
+    <div class="stats-grid">
+      <div class="stat-card tang">
+        <div class="stat-num">81</div>
+        <div class="stat-label-cn">诗 人</div>
+        <div class="stat-label-en">POETS</div>
+        <div class="stat-corner">人</div>
+      </div>
+      <div class="stat-card nsong">
+        <div class="stat-num">22</div>
+        <div class="stat-label-cn">核心代表</div>
+        <div class="stat-label-en">CORE FIGURES</div>
+        <div class="stat-corner">名家</div>
+      </div>
+      <div class="stat-card ssong">
+        <div class="stat-num">38</div>
+        <div class="stat-label-cn">人物关系</div>
+        <div class="stat-label-en">RELATIONS</div>
+        <div class="stat-corner">网</div>
+      </div>
+      <div class="stat-card ink">
+        <div class="stat-num">700</div>
+        <div class="stat-label-cn">年 跨 度</div>
+        <div class="stat-label-en">YEARS · 618-1279</div>
+        <div class="stat-corner">年</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底栏 -->
+  <div class="bottom-divider"></div>
+  <div class="bottom-row">
+    <div class="bottom-meta-left">
+      <div class="bottom-cn">钱塘文脉 · 一图看完</div>
+      <div class="bottom-en">QIANTANG · 700 YEARS · ONE INTERACTIVE MAP</div>
+    </div>
+    <div class="bottom-seal-wrap">
+      <div class="seal" style="width: 72px; height: 72px; font-size: 40px; transform: rotate(-4deg);">图</div>
+      <div class="bottom-seal-label">v 1.0 · APACHE 2.0</div>
+    </div>
+  </div>
+
+  <!-- 视觉滤镜 (放最后保证盖在所有内容上) -->
+  <div class="vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>

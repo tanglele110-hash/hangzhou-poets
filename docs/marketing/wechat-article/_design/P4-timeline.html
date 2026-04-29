@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>P4 · 时间轴主视图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  .cap-tag    { position:absolute; top:200px; left:0; right:0; text-align:center; z-index:10; }
+  .cap-title  { position:absolute; top:256px; left:0; right:0; text-align:center; z-index:10; }
+  .cap-cn     { font-family:"Noto Serif SC",serif; font-size:44px; font-weight:700; color:var(--ink); letter-spacing:0.2em; text-indent:0.2em; }
+  .cap-en     { margin-top:14px; font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-mid); letter-spacing:0.5em; }
+  .cap-hint   { position:absolute; top:366px; left:0; right:0; text-align:center; z-index:10;
+                font-family:"Noto Serif SC",serif; font-size:18px; color:var(--ink-mid); letter-spacing:0.18em; }
+  .cap-hint .accent { color:var(--tang); font-weight:600; }
+
+  /* Timeline 主体 */
+  .tl-wrap {
+    position: absolute; top: 460px; left: 80px; right: 80px;
+    height: 740px;
+    z-index: 10;
+  }
+  .tl-axis {
+    position: absolute; left: 240px; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .tl-row {
+    position: absolute; left: 0; right: 0;
+    display: flex; align-items: center;
+    height: 92px;
+  }
+  .tl-year {
+    flex: 0 0 200px;
+    text-align: right;
+    padding-right: 56px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 18px;
+    color: var(--ink-mid);
+    letter-spacing: 0.1em;
+  }
+  .tl-year .y { font-size: 22px; font-weight: 700; color: var(--ink); display: block; }
+  .tl-year .y-en { font-size: 10px; color: var(--ink-light); letter-spacing: 0.3em; margin-top: 4px; }
+
+  .tl-node {
+    position: absolute; left: 232px;
+    width: 17px; height: 17px;
+    border-radius: 50%;
+    background: var(--ink-light);
+    transform: translateY(-1px);
+  }
+  .tl-node.tang  { background: var(--tang);  box-shadow: 0 0 0 6px rgba(184,59,59,0.16); }
+  .tl-node.nsong { background: var(--nsong); box-shadow: 0 0 0 6px rgba(74,107,140,0.16); }
+  .tl-node.ssong { background: var(--ssong); box-shadow: 0 0 0 6px rgba(92,122,107,0.16); }
+
+  .tl-content {
+    flex: 1;
+    padding-left: 40px;
+  }
+  .tl-period {
+    font-family: "Noto Serif SC", serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+  }
+  .tl-period.tang  { color: var(--tang); }
+  .tl-period.nsong { color: var(--nsong); }
+  .tl-period.ssong { color: var(--ssong); }
+  .tl-poets {
+    font-family: "Noto Serif SC", serif;
+    font-size: 16px;
+    color: var(--ink-mid);
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  /* Legend */
+  .legend {
+    position: absolute; bottom: 156px; left: 80px; right: 80px;
+    display: flex; justify-content: center; gap: 56px;
+    z-index: 10;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .lg-item { display:flex; align-items:center; gap:12px; }
+  .lg-dot { width:16px; height:16px; border-radius:50%; }
+  .lg-dot.tang  { background: var(--tang); }
+  .lg-dot.nsong { background: var(--nsong); }
+  .lg-dot.ssong { background: var(--ssong); }
+  .lg-text {
+    font-family: "Noto Serif SC", serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.2em;
+  }
+  .lg-text .num { color:var(--ink-mid); margin-left:6px; font-family:"JetBrains Mono",monospace; font-weight:400; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="topbar">
+    <div class="wordmark">杭州 · 唐宋诗词名家图鉴</div>
+    <div class="index-tag">04 / 11 · 能力 01</div>
+  </div>
+  <div class="topbar-divider"></div>
+
+  <div class="cap-tag"><div class="label-pill tang">能 力 · CAPABILITY</div></div>
+  <div class="cap-title">
+    <div class="cap-cn">时间轴主视图</div>
+    <div class="cap-en">CAPABILITY 01 · TIMELINE · 7 PERIODS · 81 POETS</div>
+  </div>
+  <div class="cap-hint">81 位诗人按生卒年纵向铺开，初唐到南宋分 <span class="accent">7 块</span></div>
+
+  <!-- 7 时期时间轴 -->
+  <div class="tl-wrap">
+    <div class="tl-axis"></div>
+
+    <div class="tl-row" style="top:0px;">
+      <div class="tl-year"><span class="y">618-712</span><span class="y-en">EARLY TANG</span></div>
+      <div class="tl-node tang"></div>
+      <div class="tl-content">
+        <div class="tl-period tang">初 唐</div>
+        <div class="tl-poets">贺知章 · 宋之问 · 沈佺期 · 骆宾王</div>
+      </div>
+    </div>
+
+    <div class="tl-row" style="top:92px;">
+      <div class="tl-year"><span class="y">712-766</span><span class="y-en">HIGH TANG</span></div>
+      <div class="tl-node tang"></div>
+      <div class="tl-content">
+        <div class="tl-period tang">盛 唐</div>
+        <div class="tl-poets">孟浩然 · 王维 · 李白 · 杜甫</div>
+      </div>
+    </div>
+
+    <div class="tl-row" style="top:184px;">
+      <div class="tl-year"><span class="y">766-836</span><span class="y-en">MID TANG</span></div>
+      <div class="tl-node tang"></div>
+      <div class="tl-content">
+        <div class="tl-period tang">中 唐</div>
+        <div class="tl-poets">白居易 · 刘禹锡 · 元稹 · 韩愈 · 柳宗元</div>
+      </div>
+    </div>
+
+    <div class="tl-row" style="top:276px;">
+      <div class="tl-year"><span class="y">836-907</span><span class="y-en">LATE TANG</span></div>
+      <div class="tl-node tang"></div>
+      <div class="tl-content">
+        <div class="tl-period tang">晚 唐</div>
+        <div class="tl-poets">杜牧 · 李商隐 · 罗隐 · 皮日休</div>
+      </div>
+    </div>
+
+    <div class="tl-row" style="top:368px;">
+      <div class="tl-year"><span class="y">907-960</span><span class="y-en">FIVE DYNASTIES</span></div>
+      <div class="tl-node"></div>
+      <div class="tl-content">
+        <div class="tl-period">五 代</div>
+        <div class="tl-poets">钱镠 · 罗隐（晚年）</div>
+      </div>
+    </div>
+
+    <div class="tl-row" style="top:460px;">
+      <div class="tl-year"><span class="y">960-1127</span><span class="y-en">N. SONG</span></div>
+      <div class="tl-node nsong"></div>
+      <div class="tl-content">
+        <div class="tl-period nsong">北 宋</div>
+        <div class="tl-poets">林逋 · 苏轼 · 王安石 · 欧阳修 · 黄庭坚 · 周邦彦</div>
+      </div>
+    </div>
+
+    <div class="tl-row" style="top:552px;">
+      <div class="tl-year"><span class="y">1127-1279</span><span class="y-en">S. SONG</span></div>
+      <div class="tl-node ssong"></div>
+      <div class="tl-content">
+        <div class="tl-period ssong">南 宋</div>
+        <div class="tl-poets">李清照 · 陆游 · 辛弃疾 · 姜夔 · 文天祥 · 岳飞</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="lg-item">
+      <div class="lg-dot tang"></div>
+      <div class="lg-text">核心代表 <span class="num">22</span></div>
+    </div>
+    <div class="lg-item">
+      <div class="lg-dot nsong"></div>
+      <div class="lg-text">重要名家 <span class="num">~30</span></div>
+    </div>
+    <div class="lg-item">
+      <div class="lg-dot ssong"></div>
+      <div class="lg-text">知名文人 <span class="num">~30</span></div>
+    </div>
+  </div>
+
+  <div class="bottom-divider"></div>
+  <div class="bottom-row">
+    <div>
+      <div class="bottom-cn">能力 01 · 时间轴</div>
+      <div class="bottom-en">SCROLL · ZOOM · TOUCH-DRAG · ALL SUPPORTED</div>
+    </div>
+    <div>
+      <div class="bottom-cta-cn">→ 看完整 700 年</div>
+      <div class="bottom-cta-en">QIANTANG.GITHUB.IO</div>
+    </div>
+  </div>
+
+  <div class="vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>

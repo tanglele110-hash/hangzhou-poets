@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>C3 · 小红书封面 · 朱印题字版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=ZCOOL+XiaoWei&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* C3 局部样式 */
+  .seal-region {
+    position: absolute; top: 280px; left: 0; right: 0;
+    display: flex; justify-content: center; align-items: center;
+    gap: 80px;
+    z-index: 10;
+  }
+  .seal-large {
+    width: 220px; height: 220px;
+    background: var(--tang); color: var(--paper);
+    font-family: "Noto Serif SC", serif;
+    font-weight: 900; font-size: 138px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow:
+      inset 0 0 0 6px var(--tang),
+      inset 0 0 0 9px var(--paper),
+      inset 0 0 0 13px var(--tang);
+    letter-spacing: 0;
+  }
+  .seal-large.tang { transform: rotate(-4deg); }
+  .seal-large.song {
+    background: #1a1a1a; color: var(--paper);
+    box-shadow:
+      inset 0 0 0 6px #1a1a1a,
+      inset 0 0 0 9px var(--paper),
+      inset 0 0 0 13px #1a1a1a;
+    transform: rotate(4deg);
+  }
+  .seal-mid {
+    font-family: "Noto Serif SC", serif;
+    font-size: 84px; font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+
+  .center-title {
+    position: absolute; top: 588px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .center-title-cn {
+    font-family: "Noto Serif SC", serif;
+    font-size: 116px; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.16em; text-indent: 0.16em;
+    line-height: 1;
+  }
+  .center-title-en {
+    margin-top: 32px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px; color: var(--ink-mid);
+    letter-spacing: 0.5em; text-indent: 0.5em;
+  }
+
+  .desc-region {
+    position: absolute; top: 920px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+    padding: 0 96px; box-sizing: border-box;
+  }
+  .desc-line {
+    font-family: "Noto Serif SC", serif;
+    font-size: 30px; font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.18em; text-indent: 0.18em;
+    line-height: 1.7;
+  }
+  .desc-line strong {
+    color: var(--tang);
+    font-weight: 600;
+  }
+  .product-name-row {
+    position: absolute; top: 1100px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .product-name-cn {
+    font-family: "Noto Serif SC", serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.3em; text-indent: 0.3em;
+  }
+  .product-name-en {
+    margin-top: 14px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px; color: var(--ink-mid);
+    letter-spacing: 0.4em;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <!-- 顶栏 -->
+  <div class="topbar">
+    <div class="wordmark">杭州 · 唐宋诗词名家图鉴</div>
+    <div class="index-tag">01 / 11 · 封 面 C</div>
+  </div>
+  <div class="topbar-divider"></div>
+
+  <!-- 双印章 + 中间「与」 -->
+  <div class="seal-region">
+    <div class="seal-large tang">唐</div>
+    <div class="seal-mid">与</div>
+    <div class="seal-large song">宋</div>
+  </div>
+
+  <!-- 中央大字 -->
+  <div class="center-title">
+    <div class="center-title-cn">钱 塘 文 脉</div>
+    <div class="center-title-en">QIANTANG · LITERARY LINEAGE · ONE MAP</div>
+  </div>
+
+  <!-- 描述 -->
+  <div class="desc-region">
+    <div class="desc-line">
+      七百年里 <strong>八十一位</strong> 与杭州有关的诗人，<br/>
+      第一次能"一眼看完"。
+    </div>
+  </div>
+
+  <!-- 产品名 -->
+  <div class="product-name-row">
+    <div class="product-name-cn">杭州唐宋诗词名家图鉴</div>
+    <div class="product-name-en">HANGZHOU TANG-SONG POETS · INTERACTIVE TIMELINE</div>
+  </div>
+
+  <!-- 底栏 -->
+  <div class="bottom-divider"></div>
+  <div class="bottom-row">
+    <div>
+      <div class="bottom-cn">钱塘 · 文脉 · 一图看完</div>
+      <div class="bottom-en">QIANTANG · 700 YEARS · 81 POETS · 38 RELATIONS</div>
+    </div>
+    <div>
+      <div class="bottom-cta-cn">→ 在线访问</div>
+      <div class="bottom-cta-en">QIANTANG.GITHUB.IO</div>
+    </div>
+  </div>
+
+  <div class="vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>

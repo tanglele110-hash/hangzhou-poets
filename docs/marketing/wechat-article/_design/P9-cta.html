@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>P9 · CTA · 怎么找到它</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  .cta-tag {
+    position: absolute; top: 200px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .cta-title {
+    position: absolute; top: 268px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .cta-cn {
+    font-family: "Noto Serif SC", serif;
+    font-size: 64px; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.2em; text-indent: 0.2em;
+  }
+  .cta-en {
+    margin-top: 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px; color: var(--ink-mid);
+    letter-spacing: 0.5em;
+  }
+
+  .cta-list {
+    position: absolute; top: 470px; left: 80px; right: 80px;
+    z-index: 10;
+  }
+  .cta-row {
+    display: flex; align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cta-row:last-child { border-bottom: none; }
+  .cta-row .num {
+    flex: 0 0 60px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 32px; font-weight: 700;
+    color: var(--tang);
+    letter-spacing: 0;
+  }
+  .cta-row .lbl {
+    flex: 0 0 130px;
+    font-family: "Noto Serif SC", serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.2em;
+  }
+  .cta-row .url {
+    flex: 1;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 17px; color: var(--ink-mid);
+    letter-spacing: 0.05em;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .cta-row .url .accent { color: var(--tang); font-weight: 600; }
+
+  .closing {
+    position: absolute; bottom: 200px; left: 80px; right: 80px;
+    text-align: center; z-index: 10;
+    padding-top: 36px;
+    border-top: 1px dashed var(--border);
+  }
+  .closing-text {
+    font-family: "Noto Serif SC", serif;
+    font-size: 22px; font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.16em; text-indent: 0.16em;
+    line-height: 1.7;
+  }
+  .closing-text strong {
+    color: var(--tang); font-weight: 600;
+  }
+
+  /* QR 占位 */
+  .qr-placeholder {
+    position: absolute; right: 96px; top: 460px;
+    width: 180px; height: 180px;
+    border: 2px dashed var(--ink-light);
+    background: var(--paper-2);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    z-index: 10;
+  }
+  .qr-placeholder .qr-text {
+    font-family: "Noto Serif SC", serif;
+    font-size: 14px; color: var(--ink-light);
+    letter-spacing: 0.2em;
+  }
+  .qr-placeholder .qr-en {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px; color: var(--ink-light);
+    letter-spacing: 0.3em;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="topbar">
+    <div class="wordmark">杭州 · 唐宋诗词名家图鉴</div>
+    <div class="index-tag">11 / 11 · CTA</div>
+  </div>
+  <div class="topbar-divider"></div>
+
+  <div class="cta-tag"><div class="label-pill tang">CTA · 怎么找到它</div></div>
+  <div class="cta-title">
+    <div class="cta-cn">去看 · 去用 · 去转发</div>
+    <div class="cta-en">VISIT · USE · SHARE</div>
+  </div>
+
+  <div class="cta-list">
+    <div class="cta-row">
+      <div class="num">01</div>
+      <div class="lbl">在线访问</div>
+      <div class="url">tanglele110-hash.<span class="accent">github.io</span>/hangzhou-poets</div>
+    </div>
+    <div class="cta-row">
+      <div class="num">02</div>
+      <div class="lbl">GitHub 仓库</div>
+      <div class="url">github.com/<span class="accent">tanglele110-hash</span>/hangzhou-poets</div>
+    </div>
+    <div class="cta-row">
+      <div class="num">03</div>
+      <div class="lbl">离线包下载</div>
+      <div class="url">GitHub Releases · <span class="accent">hangzhou-poets-vX.Y.Z-dist.zip</span></div>
+    </div>
+    <div class="cta-row">
+      <div class="num">04</div>
+      <div class="lbl">移 动 端</div>
+      <div class="url">同一 URL · 已做适配 · <span class="accent">扫码即看</span></div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <div class="closing-text">
+      觉得有用，去 GitHub 点个 <strong>★ Star</strong>。<br/>
+      数据有错，欢迎提 <strong>Issue</strong> 或 <strong>PR</strong>。<br/>
+      转发给可能用得上的人就好。
+    </div>
+  </div>
+
+  <div class="bottom-divider"></div>
+  <div class="bottom-row">
+    <div>
+      <div class="bottom-cn">钱塘文脉 · 一图看完</div>
+      <div class="bottom-en">APACHE 2.0 · OPEN SOURCE · COPYRIGHT 2026 LELE TANG</div>
+    </div>
+    <div>
+      <div class="bottom-cta-cn">→ 现在就去</div>
+      <div class="bottom-cta-en">QIANTANG.GITHUB.IO</div>
+    </div>
+  </div>
+
+  <div class="vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>

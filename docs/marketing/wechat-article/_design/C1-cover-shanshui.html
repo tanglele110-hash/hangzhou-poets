@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>C1 · 小红书封面 · 山水版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=ZCOOL+XiaoWei&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f1e8;
+    --paper-2: #faf9f5;
+    --border: #d4c4b7;
+    --ink: #2c2c2c;
+    --ink-mid: #6b6458;
+    --ink-light: #a89e89;
+    --tang: #b83b3b;
+    --nsong: #4a6b8c;
+    --ssong: #5c7a6b;
+  }
+  html, body { margin:0; padding:0; background:#1a1a1a; font-family:"Noto Serif SC", serif; }
+  .canvas {
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    box-sizing:border-box; margin:0 auto;
+    color:var(--ink);
+    background:var(--paper);
+  }
+
+  /* 山水背景填满整个画布 */
+  .ink-landscape { position:absolute; inset:0; width:100%; height:100%; z-index:1; }
+
+  /* 顶部纸纹与 vignette */
+  .vignette {
+    position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse at center 40%, transparent 60%, rgba(60,50,30,0.16) 100%);
+    z-index:5;
+  }
+  .paper-texture {
+    position:absolute; inset:0; pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    z-index:6;
+  }
+
+  /* ============ 顶栏 wordmark ============ */
+  .topbar {
+    position:absolute; top:64px; left:64px; right:64px;
+    display:flex; justify-content:space-between; align-items:center;
+    z-index:10;
+  }
+  .wordmark {
+    font-family:"Noto Serif SC", serif;
+    font-size:18px; font-weight:600;
+    color:var(--ink-mid);
+    letter-spacing:0.4em; text-indent:0.4em;
+  }
+  .index-tag {
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px; color:var(--ink-light);
+    letter-spacing:0.3em;
+  }
+  .topbar-divider {
+    position:absolute; top:118px; left:64px; right:64px;
+    height:1px; background:var(--ink-light); opacity:0.3;
+    z-index:10;
+  }
+
+  /* ============ 主标题区 ============ */
+  /* 主标题：「钱塘七百年」 大字横排，居中偏上 */
+  .hero-region {
+    position:absolute; top:240px; left:0; right:0;
+    text-align:center;
+    z-index:10;
+  }
+  .hero-pretitle {
+    font-family:"JetBrains Mono", monospace;
+    font-size:14px; color:var(--ink-mid);
+    letter-spacing:0.5em; text-indent:0.5em;
+    margin-bottom:36px;
+  }
+  .hero-cn {
+    font-family:"Noto Serif SC", serif;
+    font-weight:700;
+    font-size:172px;
+    color:var(--ink);
+    letter-spacing:0.16em; text-indent:0.16em;
+    line-height:1;
+    text-shadow: 0 2px 0 rgba(244,241,232,0.6);
+  }
+  .hero-divider-block {
+    margin: 38px auto 28px;
+    width:200px; height:1px;
+    background: var(--ink-mid); opacity:0.5;
+    position:relative;
+  }
+  .hero-divider-block::before {
+    content:'·';
+    position:absolute; left:50%; top:50%;
+    transform: translate(-50%,-50%);
+    background: var(--paper);
+    padding: 0 12px;
+    color: var(--tang);
+    font-size:24px;
+    line-height:1;
+  }
+  .hero-sub {
+    font-family:"Noto Serif SC", serif;
+    font-size:34px;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:0.18em; text-indent:0.18em;
+    line-height:1.5;
+  }
+  .hero-sub strong {
+    color: var(--tang);
+    font-weight:700;
+  }
+
+  /* ============ 朱印 (左下) ============ */
+  .seal {
+    background: var(--tang);
+    color: var(--paper);
+    font-family: "Noto Serif SC", serif;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow:
+      inset 0 0 0 3px var(--tang),
+      inset 0 0 0 4px var(--paper),
+      inset 0 0 0 6px var(--tang);
+    letter-spacing: 0;
+    font-feature-settings: "palt";
+  }
+  .seal-corner {
+    position:absolute; top:228px; right:104px;
+    z-index:11;
+    transform: rotate(-6deg);
+  }
+
+  /* ============ 中下 · 一句话 tagline ============ */
+  .tagline-region {
+    position:absolute; top:880px; left:0; right:0;
+    text-align:center;
+    z-index:10;
+    padding:0 96px;
+    box-sizing:border-box;
+  }
+  .tagline {
+    font-family:"Noto Serif SC", serif;
+    font-size:28px;
+    font-weight:400;
+    color:var(--ink);
+    letter-spacing:0.16em; text-indent:0.16em;
+    line-height:1.85;
+  }
+  .tagline strong {
+    color: var(--tang);
+    font-weight:600;
+  }
+
+  /* ============ 数据条 (浮在水雾上) ============ */
+  .stats-row {
+    position:absolute; top:1140px; left:64px; right:64px;
+    display:flex; justify-content:center; gap:60px;
+    z-index:10;
+  }
+  .stat-mini {
+    text-align:center;
+  }
+  .stat-mini .num {
+    font-family:"JetBrains Mono", monospace;
+    font-size:60px; font-weight:900;
+    line-height:1;
+    color:var(--ink);
+    letter-spacing:0.02em;
+  }
+  .stat-mini.tang   .num { color: var(--tang); }
+  .stat-mini.nsong  .num { color: var(--nsong); }
+  .stat-mini.ssong  .num { color: var(--ssong); }
+  .stat-mini .label {
+    margin-top:12px;
+    font-family:"Noto Serif SC", serif;
+    font-size:16px; font-weight:500;
+    color:var(--ink-mid);
+    letter-spacing:0.4em; text-indent:0.4em;
+  }
+  .stat-divider {
+    width:1px; height:50px; background:var(--ink-light); opacity:0.4;
+    margin-top:8px;
+  }
+
+  /* ============ 底栏 ============ */
+  .bottom-divider {
+    position:absolute; bottom:130px; left:64px; right:64px;
+    height:1px; background:var(--ink-light); opacity:0.3;
+    z-index:10;
+  }
+  .bottom-row {
+    position:absolute; bottom:48px; left:64px; right:64px;
+    display:flex; justify-content:space-between; align-items:center;
+    z-index:10;
+  }
+  .bottom-product-name {
+    font-family:"Noto Serif SC", serif;
+    font-size:22px; font-weight:600;
+    color:var(--ink);
+    letter-spacing:0.4em; text-indent:0.4em;
+    text-shadow: 0 1px 0 rgba(244,241,232,0.8);
+  }
+  .bottom-product-en {
+    margin-top:8px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px; color:var(--ink-mid);
+    letter-spacing:0.3em;
+    text-shadow: 0 1px 0 rgba(244,241,232,0.8);
+  }
+  .bottom-cta {
+    text-align:right;
+  }
+  .bottom-cta-cn {
+    font-family:"Noto Serif SC", serif;
+    font-size:18px; font-weight:600;
+    color:var(--tang);
+    letter-spacing:0.3em;
+    text-shadow: 0 1px 0 rgba(244,241,232,0.8);
+  }
+  .bottom-cta-en {
+    margin-top:8px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px; color:var(--ink-mid);
+    letter-spacing:0.3em;
+    text-shadow: 0 1px 0 rgba(244,241,232,0.8);
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- 山水底 (filling whole canvas, with paper-style sky/water) -->
+  <svg class="ink-landscape" viewBox="0 0 1080 1440" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <filter id="ink-blur"><feGaussianBlur stdDeviation="1.2"/></filter>
+      <filter id="ink-soft"><feGaussianBlur stdDeviation="3"/></filter>
+      <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#f4f1e8"/>
+        <stop offset="55%" stop-color="#ede8d9"/>
+        <stop offset="100%" stop-color="#e3dcc6"/>
+      </linearGradient>
+      <linearGradient id="water" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#e3dcc6"/>
+        <stop offset="100%" stop-color="#cdbf95"/>
+      </linearGradient>
+    </defs>
+    <!-- Sky -->
+    <rect width="1080" height="1440" fill="url(#sky)"/>
+
+    <!-- Far range — 极淡 (上移 60px) -->
+    <g opacity="0.35" filter="url(#ink-soft)">
+      <path d="M0,760 C120,730 240,750 360,730 C480,710 600,740 720,725
+               C840,710 960,735 1080,720 L1080,870 L0,870 Z"
+            fill="#7a8a93"/>
+    </g>
+    <!-- Mid range (上移 60px) -->
+    <g opacity="0.55" filter="url(#ink-blur)">
+      <path d="M0,870 C100,835 200,855 320,842 C440,828 560,852 680,838
+               C800,824 920,848 1080,835 L1080,960 L0,960 Z"
+            fill="#5e6e76"/>
+    </g>
+    <!-- Near range (上移 60px) -->
+    <g opacity="0.78">
+      <path d="M0,960 C80,930 160,945 260,940 C360,935 460,952 560,944
+               C660,936 760,950 860,943 C960,937 1020,949 1080,945 L1080,1060 L0,1060 Z"
+            fill="#3e4d54"/>
+    </g>
+    <!-- Water (从 1060 起一直到底，给 stats 留出"漂在水上"的空间) -->
+    <rect x="0" y="1060" width="1080" height="380" fill="url(#water)"/>
+    <!-- Water ripples (避开 stats 区域 1100-1200) -->
+    <g stroke="#8a8268" stroke-width="1" fill="none" opacity="0.32">
+      <path d="M80,1100 Q160,1096 240,1100 T400,1100"/>
+      <path d="M620,1100 Q700,1096 780,1100 T940,1100"/>
+      <path d="M180,1260 Q260,1256 340,1260 T500,1260"/>
+      <path d="M580,1280 Q660,1276 740,1280 T900,1280"/>
+      <path d="M120,1340 Q200,1336 280,1340 T440,1340"/>
+      <path d="M650,1360 Q730,1356 810,1360 T970,1360"/>
+    </g>
+    <!-- Tiny boat (浮在水面中部，避开 stats 与 bottom) -->
+    <g transform="translate(840, 1268)" opacity="0.7">
+      <path d="M-28,5 Q0,14 28,5 L22,11 L-22,11 Z" fill="#2c2c2c"/>
+      <line x1="0" y1="5" x2="0" y2="-18" stroke="#2c2c2c" stroke-width="1.2"/>
+      <path d="M0,-18 Q9,-12 0,-7" fill="none" stroke="#2c2c2c" stroke-width="1"/>
+    </g>
+    <!-- Mist over near range -->
+    <g opacity="0.6">
+      <ellipse cx="280" cy="1020" rx="320" ry="14" fill="#f4f1e8" filter="url(#ink-soft)"/>
+      <ellipse cx="820" cy="1040" rx="320" ry="16" fill="#f4f1e8" filter="url(#ink-soft)"/>
+    </g>
+    <!-- Mist near stats area for "floating" effect -->
+    <g opacity="0.55">
+      <ellipse cx="540" cy="1180" rx="500" ry="38" fill="#f4f1e8" filter="url(#ink-soft)"/>
+    </g>
+  </svg>
+
+  <!-- 顶栏 -->
+  <div class="topbar">
+    <div class="wordmark">杭州 · 唐宋诗词名家图鉴</div>
+    <div class="index-tag">01 / 11 · 封 面</div>
+  </div>
+  <div class="topbar-divider"></div>
+
+  <!-- 主标题区 -->
+  <div class="hero-region">
+    <div class="hero-pretitle">QIANTANG · 700 YEARS · 81 POETS</div>
+    <h1 class="hero-cn">钱塘七百年</h1>
+    <div class="hero-divider-block"></div>
+    <div class="hero-sub">八十一位诗人 · <strong>一张可交互的时间轴</strong></div>
+  </div>
+
+  <!-- 朱印 (右上角点缀) -->
+  <div class="seal seal-corner" style="width:96px; height:96px; font-size:54px;">塘</div>
+
+  <!-- 数据条 (山水之上飘起一行) -->
+  <div class="stats-row">
+    <div class="stat-mini tang">
+      <div class="num">81</div>
+      <div class="label">诗 人</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-mini nsong">
+      <div class="num">22</div>
+      <div class="label">核心代表</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-mini ssong">
+      <div class="num">38</div>
+      <div class="label">人物关系</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-mini">
+      <div class="num">700</div>
+      <div class="label">年 跨 度</div>
+    </div>
+  </div>
+
+  <!-- 底栏 -->
+  <div class="bottom-divider"></div>
+  <div class="bottom-row">
+    <div>
+      <div class="bottom-product-name">杭州唐宋诗词名家图鉴</div>
+      <div class="bottom-product-en">HANGZHOU TANG-SONG POETS · INTERACTIVE TIMELINE</div>
+    </div>
+    <div class="bottom-cta">
+      <div class="bottom-cta-cn">→ 一图看完</div>
+      <div class="bottom-cta-en">QIANTANG.GITHUB.IO</div>
+    </div>
+  </div>
+
+  <!-- 视觉滤镜 -->
+  <div class="vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>

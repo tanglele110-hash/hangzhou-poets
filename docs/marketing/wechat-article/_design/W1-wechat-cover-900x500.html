@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>W1 · 公众号横版封面 · 900×500</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* W1 - 公众号横版 900×500 */
+  .canvas-wechat {
+    color: var(--ink);
+  }
+  /* 横版顶栏 */
+  .w-topbar {
+    position: absolute; top: 24px; left: 36px; right: 36px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 10;
+  }
+  .w-wordmark {
+    font-family: "Noto Serif SC", serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--ink-mid);
+    letter-spacing: 0.4em; text-indent: 0.4em;
+  }
+  .w-index {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; color: var(--ink-light);
+    letter-spacing: 0.3em;
+  }
+  .w-topbar-divider {
+    position: absolute; top: 56px; left: 36px; right: 36px;
+    height: 1px; background: var(--border);
+    z-index: 10;
+  }
+
+  /* 左右两栏 */
+  .w-grid {
+    position: absolute; top: 86px; bottom: 76px;
+    left: 36px; right: 36px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    z-index: 10;
+  }
+  .w-left {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding-right: 8px;
+    border-right: 1px solid var(--border);
+  }
+  .w-pre {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; color: var(--ink-mid);
+    letter-spacing: 0.5em;
+    margin-bottom: 16px;
+  }
+  .w-title {
+    font-family: "Noto Serif SC", serif;
+    font-size: 60px; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .w-title .accent { color: var(--tang); }
+  .w-sub {
+    margin-top: 22px;
+    font-family: "Noto Serif SC", serif;
+    font-size: 18px; font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.16em;
+    line-height: 1.6;
+  }
+  .w-sub strong { color: var(--tang); font-weight: 600; }
+
+  .w-right {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  /* 朱印缩小并移到右上角 */
+  .w-seal {
+    position: absolute; top: -4px; right: 0;
+    width: 52px; height: 52px;
+    background: var(--tang); color: var(--paper);
+    font-family: "Noto Serif SC", serif;
+    font-weight: 900; font-size: 28px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow:
+      inset 0 0 0 2px var(--tang),
+      inset 0 0 0 3px var(--paper),
+      inset 0 0 0 4px var(--tang);
+    transform: rotate(-4deg);
+  }
+  /* 4 个数字成为视觉中心 */
+  .w-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 36px;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+  .w-stat {
+    text-align: center;
+  }
+  .w-stat .num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 56px; font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .w-stat.tang  .num { color: var(--tang); }
+  .w-stat.nsong .num { color: var(--nsong); }
+  .w-stat.ssong .num { color: var(--ssong); }
+  .w-stat .lbl {
+    margin-top: 10px;
+    font-family: "Noto Serif SC", serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-mid);
+    letter-spacing: 0.3em; text-indent: 0.3em;
+  }
+
+  /* 横版底栏 */
+  .w-bottom {
+    position: absolute; bottom: 18px; left: 36px; right: 36px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 10;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .w-bottom-product {
+    font-family: "Noto Serif SC", serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.4em; text-indent: 0.4em;
+  }
+  .w-bottom-en {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; color: var(--tang);
+    letter-spacing: 0.3em;
+  }
+
+  /* 横版纸纹/vignette */
+  .w-vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(60,50,30,0.12) 100%);
+    z-index: 51;
+  }
+</style>
+</head>
+<body>
+<div class="canvas-wechat">
+  <!-- 顶栏 -->
+  <div class="w-topbar">
+    <div class="w-wordmark">杭州 · 唐宋诗词名家图鉴 · WECHAT COVER</div>
+    <div class="w-index">2026 · 01 / 11</div>
+  </div>
+  <div class="w-topbar-divider"></div>
+
+  <!-- 主体 grid -->
+  <div class="w-grid">
+    <!-- 左：标题区 -->
+    <div class="w-left">
+      <div class="w-pre">QIANTANG · 700 YEARS · 81 POETS</div>
+      <h1 class="w-title">钱塘<span class="accent">七</span>百年</h1>
+      <div class="w-sub">
+        八十一位与杭州有关的<br/>
+        唐宋诗人，<strong>一张可交互的图</strong>。
+      </div>
+    </div>
+    <!-- 右：朱印 + 数据 -->
+    <div class="w-right">
+      <div class="w-seal">塘</div>
+      <div class="w-stats">
+        <div class="w-stat tang"><div class="num">81</div><div class="lbl">诗人</div></div>
+        <div class="w-stat nsong"><div class="num">22</div><div class="lbl">核心代表</div></div>
+        <div class="w-stat ssong"><div class="num">38</div><div class="lbl">人物关系</div></div>
+        <div class="w-stat"><div class="num">700</div><div class="lbl">年跨度</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底栏 -->
+  <div class="w-bottom">
+    <div class="w-bottom-product">杭州唐宋诗词名家图鉴 · 钱塘文脉 · 一图看完</div>
+    <div class="w-bottom-en">→ QIANTANG.GITHUB.IO</div>
+  </div>
+
+  <div class="w-vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>

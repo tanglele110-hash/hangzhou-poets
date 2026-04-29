@@ -21,3 +21,8 @@ coverage/
 *.bak
 *.tmp
 
+# 本地工作目录（开发截图、agent 上下文、设计参考）
+_temp/
+.agents/
+杭州唐宋诗词名家图鉴claude design/
+

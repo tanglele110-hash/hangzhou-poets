@@ -1,0 +1,244 @@
+/* base.css — 共享视觉系统 (复用 claude design DNA) */
+:root {
+  --paper: #f4f1e8;
+  --paper-2: #faf9f5;
+  --border: #d4c4b7;
+  --ink: #2c2c2c;
+  --ink-mid: #6b6458;
+  --ink-light: #a89e89;
+  --tang: #b83b3b;
+  --nsong: #4a6b8c;
+  --ssong: #5c7a6b;
+}
+
+html, body {
+  margin: 0; padding: 0;
+  background: #1a1a1a;
+  font-family: "Noto Serif SC", serif;
+}
+
+/* === 1080×1440 竖版小红书 / 公众号正文图 === */
+.canvas {
+  width: 1080px; height: 1440px;
+  background: var(--paper);
+  position: relative; overflow: hidden;
+  box-sizing: border-box; margin: 0 auto;
+  color: var(--ink);
+}
+/* === 900×500 公众号横版封面 === */
+.canvas-wechat {
+  width: 900px; height: 500px;
+  background: var(--paper);
+  position: relative; overflow: hidden;
+  box-sizing: border-box; margin: 0 auto;
+  color: var(--ink);
+}
+
+/* === 视觉滤镜 === */
+.paper-texture {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  z-index: 50;
+}
+.vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(60,50,30,0.16) 100%);
+  z-index: 51;
+}
+
+/* === 朱印 === */
+.seal {
+  background: var(--tang);
+  color: var(--paper);
+  font-family: "Noto Serif SC", serif;
+  font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    inset 0 0 0 3px var(--tang),
+    inset 0 0 0 4px var(--paper),
+    inset 0 0 0 6px var(--tang);
+  letter-spacing: 0;
+  font-feature-settings: "palt";
+}
+
+/* === 顶栏 (1080 画布) === */
+.topbar {
+  position: absolute; top: 56px; left: 64px; right: 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 10;
+}
+.wordmark {
+  font-family: "Noto Serif SC", serif;
+  font-size: 18px; font-weight: 600;
+  color: #3a3530;
+  letter-spacing: 0.4em; text-indent: 0.4em;
+}
+.index-tag {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 13px; color: var(--ink-light);
+  letter-spacing: 0.3em;
+}
+.topbar-divider {
+  position: absolute; top: 110px; left: 64px; right: 64px;
+  height: 1px; background: var(--border);
+  z-index: 10;
+}
+
+/* === 节标识 pill === */
+.label-pill {
+  display: inline-block;
+  padding: 6px 18px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: 0.4em; text-indent: 0.4em;
+  border: 1px solid;
+}
+.label-pill.tang { background: rgba(184,59,59,0.10); color: var(--tang);  border-color: rgba(184,59,59,0.35); }
+.label-pill.nsong { background: rgba(74,107,140,0.10); color: var(--nsong); border-color: rgba(74,107,140,0.35); }
+.label-pill.ssong { background: rgba(92,122,107,0.10); color: var(--ssong); border-color: rgba(92,122,107,0.35); }
+.label-pill.ink { background: rgba(44,44,44,0.06); color: var(--ink-mid); border-color: var(--border); }
+
+/* === 底栏分隔线 + 行 === */
+.bottom-divider {
+  position: absolute; bottom: 130px; left: 64px; right: 64px;
+  height: 1px; background: var(--border);
+  z-index: 10;
+}
+.bottom-row {
+  position: absolute; bottom: 48px; left: 64px; right: 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 12;
+}
+.bottom-cn {
+  font-family: "Noto Serif SC", serif;
+  font-size: 20px; font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.4em; text-indent: 0.4em;
+  margin-bottom: 8px;
+}
+.bottom-en {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px; color: var(--ink-light);
+  letter-spacing: 0.3em;
+}
+.bottom-cta-cn {
+  font-family: "Noto Serif SC", serif;
+  font-size: 16px; font-weight: 600;
+  color: var(--tang);
+  letter-spacing: 0.3em; text-indent: 0.3em;
+}
+.bottom-cta-en {
+  margin-top: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; color: var(--ink-light);
+  letter-spacing: 0.3em;
+}
+
+/* === 通用大字标题 === */
+.title-cn {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.1em; text-indent: 0.1em;
+  line-height: 1.1;
+  margin: 0;
+}
+.title-en {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  color: var(--ink-mid);
+  font-weight: 400;
+}
+
+/* === 通用 tagline === */
+.tagline-cn {
+  font-family: "Noto Serif SC", serif;
+  color: var(--ink);
+  letter-spacing: 0.16em; text-indent: 0.16em;
+  line-height: 1.7;
+}
+
+/* === stats mini === */
+.stat-mini { text-align: center; }
+.stat-mini .num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 56px; font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.stat-mini.tang  .num { color: var(--tang); }
+.stat-mini.nsong .num { color: var(--nsong); }
+.stat-mini.ssong .num { color: var(--ssong); }
+.stat-mini .label {
+  margin-top: 10px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 14px; font-weight: 500;
+  color: var(--ink-mid);
+  letter-spacing: 0.4em; text-indent: 0.4em;
+}
+.stat-divider {
+  width: 1px; height: 44px;
+  background: var(--ink-light); opacity: 0.4;
+  margin-top: 6px;
+}
+
+/* === 诗人卡 (复用 scenes.jsx PoetCard) === */
+.poet-card {
+  position: relative;
+  background: var(--paper-2);
+  border: 1.5px solid var(--border);
+  padding: 56px 60px;
+  box-shadow: 0 30px 60px -22px rgba(60,50,30,0.18);
+  box-sizing: border-box;
+}
+.poet-year {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 22px;
+  color: var(--ink-light);
+  letter-spacing: 0.15em;
+  margin: 18px 0 0;
+}
+.poet-name {
+  font-family: "Noto Serif SC", serif;
+  font-size: 168px;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  margin: 12px 0 0;
+}
+.poet-py {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  color: var(--ink-mid);
+  letter-spacing: 0.4em; text-indent: 0.4em;
+  margin: 8px 0 0;
+}
+.poet-accent {
+  position: absolute; right: 56px; top: 56px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: "Noto Serif SC", serif;
+  font-size: 56px; font-weight: 700;
+  letter-spacing: 0.2em;
+}
+.poet-quote {
+  position: absolute; left: 60px; right: 60px; bottom: 60px;
+}
+.poet-quote .text {
+  font-family: "Noto Serif SC", serif;
+  font-size: 48px; font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.15em;
+  border-left: 4px solid;
+  padding-left: 24px;
+  line-height: 1.4;
+}
+.poet-quote .src {
+  margin-top: 14px; margin-left: 28px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 16px;
+  color: var(--ink-mid);
+  letter-spacing: 0.2em;
+}

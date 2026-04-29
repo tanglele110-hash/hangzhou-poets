@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>P2 · 痛点 hook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  .pre-section {
+    position: absolute; top: 200px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .question-mark-bg {
+    position: absolute; left: 50%; top: 380px;
+    transform: translateX(-50%);
+    font-family: "Noto Serif SC", serif;
+    font-size: 720px; font-weight: 300;
+    color: rgba(184,59,59,0.06);
+    line-height: 1;
+    z-index: 1;
+    user-select: none;
+  }
+  .pain-question {
+    position: relative; z-index: 10;
+    font-family: "Noto Serif SC", serif;
+    font-size: 64px; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.12em; text-indent: 0.12em;
+    line-height: 1.4;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 80px;
+    box-sizing: border-box;
+  }
+  .pain-question .accent {
+    color: var(--tang);
+  }
+  .pain-source {
+    margin-top: 36px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px; color: var(--ink-mid);
+    letter-spacing: 0.4em;
+  }
+
+  /* 中下：现有方案为什么都不够 */
+  .alt-list {
+    position: absolute; top: 820px; left: 100px; right: 100px;
+    z-index: 10;
+  }
+  .alt-list-title {
+    text-align: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: var(--ink-light);
+    letter-spacing: 0.5em;
+    margin-bottom: 26px;
+    position: relative;
+  }
+  .alt-list-title::before, .alt-list-title::after {
+    content: ''; position: absolute; top: 50%;
+    width: 80px; height: 1px; background: var(--border);
+  }
+  .alt-list-title::before { left: 50%; margin-left: -210px; }
+  .alt-list-title::after  { left: 50%; margin-left: 130px; }
+  .alt-item {
+    display: flex; align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--border);
+    font-family: "Noto Serif SC", serif;
+  }
+  .alt-item:last-child { border-bottom: none; }
+  .alt-cn {
+    flex: 0 0 110px;
+    font-size: 22px; font-weight: 600;
+    color: var(--tang);
+    letter-spacing: 0.15em;
+  }
+  .alt-text {
+    flex: 1;
+    font-size: 19px; color: var(--ink);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+
+  .conclusion {
+    position: absolute; bottom: 168px; left: 0; right: 0;
+    text-align: center; z-index: 10;
+    padding: 0 100px;
+    box-sizing: border-box;
+  }
+  .conclusion-text {
+    font-family: "Noto Serif SC", serif;
+    font-size: 26px; font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.18em; text-indent: 0.18em;
+    line-height: 1.6;
+  }
+  .conclusion-text strong {
+    color: var(--tang);
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="topbar">
+    <div class="wordmark">杭州 · 唐宋诗词名家图鉴</div>
+    <div class="index-tag">02 / 11 · 痛 点</div>
+  </div>
+  <div class="topbar-divider"></div>
+
+  <div class="pre-section">
+    <div class="label-pill ink">PROBLEM · 痛点</div>
+  </div>
+
+  <!-- 大问号背景 -->
+  <div class="question-mark-bg">？</div>
+
+  <!-- 主问句 -->
+  <div style="position:absolute; top:300px; left:0; right:0; z-index:10;">
+    <div class="pain-question">
+      唐宋 <span class="accent">700</span> 年里，<br/>
+      与杭州有关的诗人，<br/>
+      你能数出几位？
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <span class="pain-source">BAI JUYI · SU SHI · WHO ELSE?</span>
+    </div>
+  </div>
+
+  <!-- 现有方案为什么都不够 -->
+  <div class="alt-list">
+    <div class="alt-list-title">CURRENT ALTERNATIVES</div>
+    <div class="alt-item">
+      <div class="alt-cn">纸 书</div>
+      <div class="alt-text">按朝代翻，看不到时间轴上的并列。</div>
+    </div>
+    <div class="alt-item">
+      <div class="alt-cn">维基百科</div>
+      <div class="alt-text">条目散，关系靠你自己跳链接拼。</div>
+    </div>
+    <div class="alt-item">
+      <div class="alt-cn">短视频</div>
+      <div class="alt-text">热闹，可看完脑子里仍是一团模糊。</div>
+    </div>
+    <div class="alt-item">
+      <div class="alt-cn">教科书</div>
+      <div class="alt-text">名家三五句话带过，谁与谁同朝从不细讲。</div>
+    </div>
+  </div>
+
+  <div class="bottom-divider"></div>
+  <div class="conclusion">
+    <div class="conclusion-text">
+      缺的不是诗，<br/>
+      是把这些诗人放在一起看的那张<strong>图</strong>。
+    </div>
+  </div>
+
+  <div class="vignette"></div>
+  <div class="paper-texture"></div>
+</div>
+</body>
+</html>
