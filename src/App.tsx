@@ -78,9 +78,15 @@ export default function App() {
     (year: number) => {
       const el = mainScrollRef.current;
       if (!el) return;
-      const targetY = (year - START_YEAR) * SCALE * timelineZoom;
-      const offset = Math.max(0, targetY - el.clientHeight * 0.15);
-      el.scrollTo({ top: offset, behavior: 'smooth' });
+      // <main> 在普通文档流里没有内部滚动条，整个页面是 window 滚动；
+      // 所以要算 main 在 document 中的绝对 Y，再叠上年份在 timeline 里的 offset。
+      const mainAbsTop = el.getBoundingClientRect().top + window.scrollY;
+      const yearOffsetInMain = (year - START_YEAR) * SCALE * timelineZoom;
+      const targetY = Math.max(
+        0,
+        mainAbsTop + yearOffsetInMain - window.innerHeight * 0.18,
+      );
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
     },
     [timelineZoom],
   );
