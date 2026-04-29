@@ -1,0 +1,71 @@
+---
+description: 杭州唐宋诗词名家图鉴 视觉系统 — 改 UI / 加组件 / 改样式前必读
+alwaysApply: true
+---
+
+# 视觉系统约束
+
+本项目的视觉调性已经成型。**任何 UI 改动必须沿用现有 DNA**，不要自由发挥配色、字体、组件壳。
+新组件 / 新页面前先扫一眼 `src/index.css` 的 `@theme` 块和现有组件实现。
+
+## 单一真相源
+
+- **设计 tokens**: `src/index.css` 的 `@theme { ... }` 块（颜色 / 字体 CSS 变量）
+- **共享 class**: `src/index.css`（`.seal-stamp` / `.label-pill-*` / `.bg-texture-vignette` / `.cta-tang` / `.poet-quote-text` / `.poet-bigname` / `.poet-pinyin` / `.modal-wordmark` 等）
+- **诗人派生 meta**: `src/utils/poetMeta.ts`（拼音 / 在杭事迹 / accent / quote / 朱印）
+- **Marketing reference**: `docs/marketing/wechat-article/_design/*.html`（视觉系统的"圣经",改交互页前对照看下同一类信息块在 marketing 图里是怎么排的）
+
+## 强制规则
+
+1. **颜色只用 CSS 变量**。禁止 hex 字面量、禁止 Tailwind `gray-*`。
+   - 主朱: `var(--color-red)` `#b83b3b`
+   - 北宋蓝: `var(--color-blue)` `#4a6b8c`
+   - 南宋绿: `var(--color-green)` `#5c7a6b`
+   - 米纸 / 浅纸: `--color-paper` / `--color-paper-2`
+   - 边框: `--color-border-paper` `#d4c4b7`
+   - 墨色三阶: `--color-ink` / `--color-ink-mid` / `--color-ink-light`
+
+2. **字体配对**。中文衬线 + Mono 拼音，两个一定成对出现。
+   - 中文标题 / 正文: `font-family: "Noto Serif SC"`（默认 body）
+   - 拼音 / 数字 / 英文小标 / Mono index: `class="font-mono-design"` 或 `font-family: "JetBrains Mono"`
+   - 任何 ≥40px 的中文标题旁边都要有 Mono 拼音 / 英文副标支撑
+
+3. **朝代 → 颜色映射**（统一用，不要自创）
+   - 唐（初/盛/中/晚）→ `label-pill-tang` / `--color-red`
+   - 北宋 → `label-pill-nsong` / `--color-blue`
+   - 南宋 / 宋 → `label-pill-ssong` / `--color-green`
+   - 五代 / 中性 → `label-pill-ink` / `--color-ink-mid`
+
+4. **Modal / 全屏页**必须套同款"壳"
+   - 顶栏: 左 wordmark「杭州 · 唐宋诗词名家图鉴」+ 右 INDEX TAG（如 `POET · DETAIL` / `RELATIONSHIP · GRAPH`）+ X
+   - 底栏: 左能力标识「能力 · XXX」+ Mono 英文副标 + 右 CTA 按钮组
+   - 容器底色: `bg-texture-vignette`（不要纯白 / 纯灰）
+   - 朱印「seal-stamp」放右上角（取标题或姓首字）
+
+5. **数据展示**用 stats-row 模式
+   - JetBrains Mono 黑色大数字 + Noto Serif 小标签 + 竖线分隔
+   - 实时数据从 `src/data/*` 动态算，不要硬编码（marketing 物料里的 38 关系是这么对上代码的）
+
+6. **引语 / 名句**用朱条 border-left
+   - `class="poet-quote-text"` + 出处用 `poet-quote-src`
+   - 不要用 `<blockquote>` 默认样式
+
+7. **CTA 按钮**只有两套
+   - 主操作: `class="cta-tang"`（朱）
+   - 次操作: `class="cta-ink"`（墨）
+   - 不要自己写 button 配色
+
+## 反 AI slop 清单（每次写 UI 前自检）
+
+- 不用 emoji 当装饰
+- 不用 gradient 渐变背景（除了 `vignette` 那个 radial）
+- 不用阴影盒子堆出"卡片"，纸纹 + 1.5px 边框已经够了
+- 不用 lucide 之外的 icon
+- 中文标题 letter-spacing 至少 0.1em（古籍气质核心）
+- 不要把诗句横排塞满整行，宁可竖排
+
+## 加新内容时的派生规则
+
+- 新增诗人字段（拼音 / 朱印字 / 在杭事迹 / 名句）→ 加进 `src/utils/poetMeta.ts` 的对应 map，**不要**改 `src/data/poets.ts` schema
+- 核心 22 位（weight=3）需要完整 hardcode meta；其他 fallback 到 short_desc / works_short
+- 诗人姓名拼音表已覆盖 81 位，新加诗人时同步补 PINYIN map
