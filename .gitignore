@@ -26,3 +26,7 @@ _temp/
 .agents/
 杭州唐宋诗词名家图鉴claude design/
 
+# 营销物料（公众号 / 小红书 / 短视频脚本与素材）
+# 仅本地使用，不入仓库 — 避免 git 历史被 PNG / MP4 撑大
+docs/marketing/
+
