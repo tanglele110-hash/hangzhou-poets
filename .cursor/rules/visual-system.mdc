@@ -14,6 +14,7 @@ alwaysApply: true
 - **共享 class**: `src/index.css`（`.seal-stamp` / `.label-pill-*` / `.bg-texture-vignette` / `.cta-tang` / `.poet-quote-text` / `.poet-bigname` / `.poet-pinyin` / `.modal-wordmark` 等）
 - **诗人派生 meta**: `src/utils/poetMeta.ts`（拼音 / 在杭事迹 / accent / quote / 朱印）
 - **Marketing reference**: `docs/marketing/wechat-article/_design/*.html`（视觉系统的"圣经",改交互页前对照看下同一类信息块在 marketing 图里是怎么排的）
+  > ⚠️ 该目录**仅作者本地存在**，已通过 `.gitignore` 排除出仓库（避免 git 历史被 PNG/MP4 撑大）。外部协作者如需视觉对照源文件，请向作者索取，或参考 `src/index.css` 的 `@theme` + 现有组件实现作为兜底。
 
 ## 强制规则
 
